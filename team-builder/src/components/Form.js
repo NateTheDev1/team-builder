@@ -1,8 +1,8 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import "./Form.css";
 
-const AddForm = ({ setTeam, team }) => {
+const AddForm = ({ updateTeam }) => {
   const [member, setMember] = useState({ name: "", email: "", role: "" });
 
   const handleChange = (e) => {
@@ -11,12 +11,14 @@ const AddForm = ({ setTeam, team }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // let newMember = {
-    //   name: member.name,
-    //   email: member.email,
-    //   role: member.role,
-    // };
-    // setTeam({ ...team, newMember });
+    let newMember = {
+      name: member.name,
+      email: member.email,
+      role: member.role,
+    };
+    setMember({ name: "", email: "", role: "" });
+    updateTeam(newMember);
+    console.log(newMember);
   };
 
   return (
@@ -28,6 +30,7 @@ const AddForm = ({ setTeam, team }) => {
         <Input
           type="name"
           name="name"
+          value={member.name}
           id="form_name"
           placeholder="John Doe"
           onChange={(e) => handleChange(e)}
@@ -37,6 +40,7 @@ const AddForm = ({ setTeam, team }) => {
       <FormGroup>
         <Label for="form_email">Email</Label>
         <Input
+          value={member.email}
           type="email"
           name="email"
           id="form_email"
@@ -48,6 +52,7 @@ const AddForm = ({ setTeam, team }) => {
         <Label for="form_role">Role</Label>
         <Input
           type="role"
+          value={member.role}
           name="role"
           id="form_role"
           placeholder="Front End Developer"

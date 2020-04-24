@@ -8,16 +8,20 @@ import "./App.css";
 function App() {
   const [team, setTeam] = useState(data);
 
+  const updateTeam = (newMember) => {
+    setTeam([...team, newMember]);
+  };
+
   return (
     <Container>
       <h1>Development Team</h1>
       <hr />
       <Row>
-        {team.map((t) => (
-          <Member data={t}> </Member>
-        ))}
+        {team.map((t) => {
+          return <Member data={t} />;
+        })}
       </Row>
-      <AddForm setTeam={setTeam} team={team} />
+      <AddForm updateTeam={updateTeam} />
     </Container>
   );
 }

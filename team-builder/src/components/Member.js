@@ -1,4 +1,5 @@
 import React from "react";
+import "./Member.css";
 import {
   Card,
   CardText,
@@ -10,7 +11,7 @@ import {
 
 const Member = ({ data }) => {
   return (
-    <Col xs="6" md="4" b xl="3">
+    <Col xs="6" md="4" b xl="3" className="Member">
       <Card>
         <CardBody>
           <CardTitle>{data.name}</CardTitle>
