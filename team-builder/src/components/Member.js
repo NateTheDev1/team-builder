@@ -7,9 +7,27 @@ import {
   CardTitle,
   Col,
   CardSubtitle,
+  Button,
 } from "reactstrap";
 
-const Member = ({ data }) => {
+const Member = ({ data, setMemberToEdit, setIsEditing, isEditing }) => {
+  const sendMemberToEdit = () => {
+    if (isEditing === false) {
+      setIsEditing(true);
+      const member = {
+        name: data.name,
+        email: data.email,
+        role: data.role,
+      };
+      setMemberToEdit(member);
+    } else if (isEditing === true) {
+      setIsEditing(false);
+    }
+  };
+
+  const btn_color = isEditing ? "secondary" : "danger";
+  const btn_active = isEditing ? true : false;
+
   return (
     <Col xs="6" md="4" b xl="3" className="Member">
       <Card>
@@ -18,6 +36,13 @@ const Member = ({ data }) => {
           <CardSubtitle>{data.role}</CardSubtitle>
           <hr />
           <CardText>{data.email}</CardText>
+          <Button
+            color={btn_color}
+            onClick={sendMemberToEdit}
+            disabled={btn_active}
+          >
+            Edit
+          </Button>
         </CardBody>
       </Card>
     </Col>

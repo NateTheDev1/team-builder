@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import "./Form.css";
 
-const AddForm = ({ updateTeam }) => {
+const AddForm = ({ updateTeam, memberToEdit, isEditing, sendEditedMember }) => {
   const [member, setMember] = useState({ name: "", email: "", role: "" });
 
   const handleChange = (e) => {
@@ -11,15 +11,34 @@ const AddForm = ({ updateTeam }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newMember = {
-      name: member.name,
-      email: member.email,
-      role: member.role,
-    };
-    setMember({ name: "", email: "", role: "" });
-    updateTeam(newMember);
-    console.log(newMember);
+    if (isEditing) {
+      let modifiedMember = {
+        name: member.name,
+        email: member.email,
+        role: member.role,
+      };
+      sendEditedMember(modifiedMember);
+      setMember({ name: "", email: "", role: "" });
+    } else {
+      let newMember = {
+        name: member.name,
+        email: member.email,
+        role: member.role,
+      };
+      setMember({ name: "", email: "", role: "" });
+      updateTeam(newMember);
+      console.log(newMember);
+    }
   };
+
+  useEffect(() => {
+    if (memberToEdit && isEditing) {
+      setMember(memberToEdit);
+    }
+  }, [memberToEdit]);
+
+  const btn_color = isEditing ? "success" : "primary";
+  const btn_text = isEditing ? "Save" : "Submit";
 
   return (
     <Form className="Form" onSubmit={(e) => handleSubmit(e)}>
@@ -60,7 +79,7 @@ const AddForm = ({ updateTeam }) => {
           required
         />
       </FormGroup>
-      <Button>Submit</Button>
+      <Button color={btn_color}>{btn_text}</Button>
     </Form>
   );
 };
